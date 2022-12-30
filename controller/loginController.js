@@ -14,21 +14,23 @@ module.exports.login = (req, res) => {
     const sql = "SELECT * FROM user WHERE username = ? AND password = SHA2(?,224)";
     let idUser;
     let message;
+    let token;
   
     connection.query(sql, [body.username, body.password], (err, result, fields) => {
-      if (err) {
-        res.status(500).send(err);
+      if (err) { throw err
+        //res.send(err);
       } 
       else {
 
         if (result.length > 0) {
-          idUser = result[0].idUser;
+          idUser = result[0].id;
           message = "User logged in successfully";
-          res.status(200).json({ idUser, message });
+          token = jwt.sign(payload, config.key, { expiresIn: 7200 })
+          res.json({ idUser, message, token });
         } 
         else {
           message = "User not found or incorrect password";
-          res.status(404).json({ message });
+          res.json({ message });
         }
       }
     });
