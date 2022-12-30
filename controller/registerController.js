@@ -10,12 +10,11 @@ module.exports.signUp = (req,res) =>{
     let mensaje = "El usuario ya se encuentra registrado";
 
 
-    const sqlInsert = `INSERT INTO user(userName, userPassword, email) VALUES
-    (?,SHA2(?,224),?)`
+    const sqlInsert = `INSERT INTO user(username, password, email) VALUES (?,SHA2(?,224),?)`
 
-    const sql = `SELECT id FROM user WHERE userName = ? OR email = ?`
+    const sql = `SELECT id FROM user WHERE username = ? OR email = ?`
     
-    const userName = req.body.userName;
+    const username = req.body.username;
     const email = req.body.email;
     const password = req.body.password;
 
@@ -23,7 +22,7 @@ module.exports.signUp = (req,res) =>{
 
     async function Fun(){
 
-        conexion.query(sql, [userName, email], (error,results,fields)=>{
+        conexion.query(sql, [username, email], (error,results,fields)=>{
 
             if (error)
                 //res.send(error)
@@ -36,7 +35,7 @@ module.exports.signUp = (req,res) =>{
 
                 if (resultUser == undefined){
 
-                    conexion.query(sqlInsert, [userName, password, email], (error, resultsInsert, fields)=>{
+                    conexion.query(sqlInsert, [username, password, email], (error, resultsInsert, fields)=>{
 
                         if(error){
                             //res.send(error);

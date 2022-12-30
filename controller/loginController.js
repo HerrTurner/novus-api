@@ -11,7 +11,7 @@ const connection = mysql.createConnection(mysqlConfig);
 module.exports.login = (req, res) => {
 
     const body = req.body;
-    const sql = "SELECT * FROM user WHERE username = ? AND psswd = SHA2(?,224)";
+    const sql = "SELECT * FROM user WHERE username = ? AND password = SHA2(?,224)";
     let idUser;
     let message;
   
