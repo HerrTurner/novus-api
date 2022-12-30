@@ -20,7 +20,7 @@ module.exports.signUp = (req,res) =>{
 
     let resultUser;
 
-    async function Fun(){
+    (async function Fun(){
 
         conexion.query(sql, [username, email], (error,results,fields)=>{
 
@@ -30,8 +30,7 @@ module.exports.signUp = (req,res) =>{
 
             else{
                 resultUser = results[0];
-                console.log("resultUser, first query");
-                console.log(resultUser);
+                console.log("resultUser, first query", resultUser);
 
                 if (resultUser == undefined){
 
@@ -43,8 +42,8 @@ module.exports.signUp = (req,res) =>{
                         }
     
                         else{
-                            console.log(resultUser);
-                            mensaje = 'Usuario insertado correctamente';   
+                            //console.log(resultUser);
+                            mensaje = 'User succesfully added';   
                             res.json({mensaje});
                         }  
                     })
@@ -54,6 +53,5 @@ module.exports.signUp = (req,res) =>{
                 }
             }
         })
-    }
-    Fun();
+    })()
 }
